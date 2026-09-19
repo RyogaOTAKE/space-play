@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Space Play">
+  <rect width="32" height="32" fill="#06070b" />
+  <circle cx="16" cy="16" r="11" fill="none" stroke="#8fd0dc" stroke-width="1.2" />
+  <circle cx="16" cy="16" r="5.5" fill="#c4a15a" />
+</svg>

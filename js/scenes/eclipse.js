@@ -90,6 +90,7 @@ export function createEclipseScene() {
     id: "eclipse",
     kicker: "ECLIPSE",
     title: "日食と月食",
+    hint: "影がかかる瞬間を見る",
     body: "月の公転を動かすと、太陽・地球・月の一直線が食を作ります。",
     mount({ setBrief: brief }) {
       setBrief = brief;

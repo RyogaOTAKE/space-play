@@ -77,6 +77,7 @@ export function createGravityAssistScene() {
     id: "assist",
     kicker: "SWINGBY",
     title: "重力アシスト",
+    hint: "通過で加速を受け取る",
     body: "探査機が惑星のそばを通過すると、速さのやり取りが起きます。",
     mount({ setBrief: brief }) {
       setBrief = brief;

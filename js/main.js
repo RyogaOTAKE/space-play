@@ -73,7 +73,7 @@ function renderNav(activeId) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `scene-btn${scene.id === activeId ? " is-active" : ""}`;
-    button.innerHTML = `<span class="scene-btn__name">${scene.title}</span><span class="scene-btn__hint">${scene.body}</span>`;
+    button.innerHTML = `<span class="scene-btn__name">${scene.title}</span><span class="scene-btn__hint">${scene.hint ?? scene.body}</span>`;
     button.addEventListener("click", () => selectScene(scene.id));
     nav.append(button);
   }

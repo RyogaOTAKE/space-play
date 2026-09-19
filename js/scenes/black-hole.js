@@ -90,6 +90,7 @@ export function createBlackHoleScene() {
     id: "hole",
     kicker: "EVENT HORIZON",
     title: "事象の地平線",
+    hint: "探針を地平線へ落とす",
     body: "画面をクリックすると探針を打ち出します。",
     mount({ setBrief: brief }) {
       setBrief = brief;
@@ -171,7 +172,7 @@ export function createBlackHoleScene() {
       ctx.setLineDash([]);
       ctx.fillStyle = "#8fd0dc";
       ctx.font = "11px 'IBM Plex Mono', monospace";
-      ctx.fillText("光子球", cx + rs * 1.5 + 8, cy - 8);
+      ctx.fillText("光子球", cx + rs * 1.5 + 10, cy + 4);
 
       ctx.fillStyle = "#000";
       ctx.beginPath();

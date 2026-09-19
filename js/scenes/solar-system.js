@@ -34,6 +34,7 @@ export function createSolarSystemScene() {
   let time = 0;
   let selected = 2;
   let setBrief = () => {};
+  let view = { width: 800, height: 600 };
 
   /**
    * 選択中の惑星に合わせた解説を更新します。
@@ -45,7 +46,7 @@ export function createSolarSystemScene() {
     const laps = years / planet.year;
     setBrief({
       kicker: "SOLAR CRUISE",
-      title: `${planet.name} を追っています`,
+      title: `${planet.name}を追っています`,
       body: `太陽を 1 周するのに地球年で ${planet.year} 年かかります。いま ${laps.toFixed(2)} 周目です。内側の惑星ほど速く回り、ケプラーの法則を目で追えます。`,
     });
   }
@@ -79,6 +80,7 @@ export function createSolarSystemScene() {
     id: "solar",
     kicker: "SOLAR CRUISE",
     title: "太陽系クルーズ",
+    hint: "公転の速さの差を追う",
     body: "惑星をクリックすると追跡対象が変わります。時間倍率を上げると、内側と外側の速さの差がはっきりします。",
     mount({ setBrief: brief }) {
       setBrief = brief;
@@ -93,34 +95,36 @@ export function createSolarSystemScene() {
       selected = 2;
       refreshBrief(0);
     },
-    update(dt) {
+    update(dt, width, height) {
+      view = { width, height };
       time += dt * 0.28;
       refreshBrief(time);
     },
-    onPointer(type, point, event) {
+    onPointer(type, point) {
       if (type !== "down") {
         return;
       }
-      const canvas = event.target;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
+      const { width, height } = view;
       const cx = width / 2;
       const cy = height / 2;
       const maxR = Math.min(width, height) * 0.46;
       let best = selected;
-      let bestDist = 18;
+      let bestDist = Infinity;
       PLANETS.forEach((planet, index) => {
         const r = orbitRadius(planet.au, maxR);
         const angle = (time / planet.year) * Math.PI * 2;
         const x = cx + Math.cos(angle) * r;
         const y = cy + Math.sin(angle) * r;
         const dist = Math.hypot(point.x - x, point.y - y);
-        if (dist < bestDist) {
+        const hitR = planet.radius + 16;
+        if (dist <= hitR && dist < bestDist) {
           bestDist = dist;
           best = index;
         }
       });
-      selected = best;
+      if (bestDist !== Infinity) {
+        selected = best;
+      }
       refreshBrief(time);
     },
     draw(ctx, width, height) {
