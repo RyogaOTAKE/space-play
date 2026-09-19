@@ -20,3 +20,5 @@ python3 -m http.server 4173
 ```
 
 ブラウザで `http://localhost:4173` を開きます。
+
+公開 URL: https://ryogaotake.github.io/space-play/
