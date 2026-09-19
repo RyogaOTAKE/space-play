@@ -1,0 +1,19 @@
+---
+description: Space Play 固有の開発知識
+alwaysApply: true
+---
+
+# Space Play
+
+本番用の静的 Web アプリです。アプリ名は Space Play です。宇宙の事象を時間方向に動かしながら体験します。
+
+## 構成
+
+- `index.html` がシェルです。
+- `js/engine.js` が Canvas のループとシーン切替を持ちます。
+- 各体験は `js/scenes/` 配下のモジュールです。
+- ES Modules を使うため、ローカルでは HTTP サーバ経由で開きます。
+
+## 開発中に詰まったポイントと対処
+
+(まだなし)

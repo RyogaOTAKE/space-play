@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Space Play — 動く宇宙を体験する</title>
+    <meta
+      name="description"
+      content="太陽系の公転、ブラックホール、日食と月食、重力アシストを、時間を動かしながら体験できるサイトです。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/app.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="masthead">
+        <p class="masthead__mark">SP-01</p>
+        <div>
+          <h1>Space Play</h1>
+          <p class="masthead__tag">動く宇宙を、観測卓から体験する</p>
+        </div>
+      </header>
+
+      <aside class="rail" aria-label="体験一覧">
+        <p class="rail__label">MISSION</p>
+        <nav class="scene-nav" id="scene-nav"></nav>
+      </aside>
+
+      <main class="stage-wrap">
+        <canvas id="stage" aria-label="宇宙の体験ステージ"></canvas>
+        <div class="vignette" aria-hidden="true"></div>
+        <section class="brief" id="brief">
+          <p class="brief__kicker" id="brief-kicker">観測中</p>
+          <h2 id="brief-title">準備しています</h2>
+          <p id="brief-body"></p>
+        </section>
+      </main>
+
+      <footer class="console">
+        <div class="console__transport">
+          <button type="button" id="btn-pause" class="btn">一時停止</button>
+          <button type="button" id="btn-reset" class="btn btn--ghost">初期位置</button>
+          <label class="speed">
+            <span>時間倍率</span>
+            <input id="speed" type="range" min="0.25" max="8" step="0.25" value="1" />
+            <output id="speed-out" for="speed">1.00×</output>
+          </label>
+        </div>
+        <p class="console__readout" id="readout">TELEMETRY STANDBY</p>
+        <div class="console__extra" id="extra-controls"></div>
+      </footer>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
