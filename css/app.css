@@ -254,6 +254,7 @@ input {
   flex-wrap: wrap;
   gap: 8px;
   justify-content: flex-end;
+  max-width: 42vw;
 }
 
 .chip {

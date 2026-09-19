@@ -35,6 +35,44 @@ export function createSolarSystemScene() {
   let selected = 2;
   let setBrief = () => {};
   let view = { width: 800, height: 600 };
+  let chips = [];
+
+  /**
+   * 追跡中の惑星に合わせてチップの選択表示を揃えます。
+   * @returns {void}
+   */
+  function syncChips() {
+    chips.forEach((chip, index) => {
+      chip.classList.toggle("is-active", index === selected);
+    });
+  }
+
+  /**
+   * 追跡対象を切り替えます。
+   * @param {number} index - 惑星配列の添字
+   * @returns {void}
+   */
+  function selectPlanet(index) {
+    selected = index;
+    syncChips();
+    refreshBrief(time);
+  }
+
+  /**
+   * 惑星名のチップ列を作ります。
+   * @returns {HTMLButtonElement[]} コントロール
+   */
+  function planetButtons() {
+    chips = PLANETS.map((planet, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `chip${index === selected ? " is-active" : ""}`;
+      button.textContent = planet.name;
+      button.addEventListener("click", () => selectPlanet(index));
+      return button;
+    });
+    return chips;
+  }
 
   /**
    * 選択中の惑星に合わせた解説を更新します。
@@ -81,18 +119,22 @@ export function createSolarSystemScene() {
     kicker: "SOLAR CRUISE",
     title: "太陽系クルーズ",
     hint: "公転の速さの差を追う",
-    body: "惑星をクリックすると追跡対象が変わります。時間倍率を上げると、内側と外側の速さの差がはっきりします。",
+    body: "下の惑星名、または画面上の惑星をクリックすると追跡対象が変わります。時間倍率を上げると、内側と外側の速さの差がはっきりします。",
     mount({ setBrief: brief }) {
       setBrief = brief;
-      return [];
+      return planetButtons();
     },
-    start() {
+    start(width, height) {
       time = 0;
+      view = { width, height };
+      syncChips();
       refreshBrief(0);
     },
-    reset() {
+    reset(width, height) {
       time = 0;
       selected = 2;
+      view = { width, height };
+      syncChips();
       refreshBrief(0);
     },
     update(dt, width, height) {
@@ -116,18 +158,22 @@ export function createSolarSystemScene() {
         const x = cx + Math.cos(angle) * r;
         const y = cy + Math.sin(angle) * r;
         const dist = Math.hypot(point.x - x, point.y - y);
-        const hitR = planet.radius + 16;
-        if (dist <= hitR && dist < bestDist) {
-          bestDist = dist;
+        const labelX = x + planet.radius + 18;
+        const labelY = y - 4;
+        const onLabel =
+          Math.abs(point.x - labelX) < 22 && Math.abs(point.y - labelY) < 12;
+        const score = onLabel ? 0 : dist;
+        if (score < bestDist) {
+          bestDist = score;
           best = index;
         }
       });
-      if (bestDist !== Infinity) {
-        selected = best;
+      if (bestDist <= 90) {
+        selectPlanet(best);
       }
-      refreshBrief(time);
     },
     draw(ctx, width, height) {
+      view = { width, height };
       drawStarfield(ctx, width, height, stars, time);
       const cx = width / 2;
       const cy = height / 2;
