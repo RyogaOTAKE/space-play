@@ -143,7 +143,7 @@ export function createEclipseScene() {
     ctx.fill();
     ctx.fillStyle = "#d36b4e";
     ctx.font = "11px 'Zen Kaku Gothic New', sans-serif";
-    ctx.fillText("本影 (いちばん暗い影)", endX - 70, endY - 10);
+    ctx.fillText("本影 (いちばん暗い影)", occulter.x - 40, occulter.y + occulter.r + 28);
   }
 
   /**
